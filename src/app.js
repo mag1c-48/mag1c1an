@@ -3,6 +3,8 @@ const client = new Client();
 const fetch = require('node-fetch');
 const querystring = require('querystring');
 require('dotenv').config();
+const moment = require('moment');
+require('moment-duration-format');
 const trim = (str, max) => ((str.length > max) ? `${str.slice(0, max - 3)}...` : str); 
 const prefix = 'd.';
 
@@ -121,6 +123,29 @@ client.on('message', async msg => {
 
 	}
 	
+});
+
+client.on('message', async msg => {
+	if (!msg.content.startsWith(prefix) || msg.author.bot) return;
+
+	const args = msg.content.slice(prefix.length).trim().split(/ +/);
+    const cmd = args.shift().toLowerCase();
+	
+	if (cmd == 'uptime') {
+		const uptime = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+		msg.reply(uptime);
+	}
+});
+
+client.on('message', async msg => {
+	if (!msg.content.startsWith(prefix) || msg.author.bot) return;
+
+	const args = msg.content.slice(prefix.length).trim().split(/ +/);
+    const cmd = args.shift().toLowerCase();
+	
+	if (cmd == 'members') {
+		msg.channel.send(`Member count: ${msg.guild.memberCount}`);
+	}
 });
 
 
