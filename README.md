@@ -1,4 +1,4 @@
-# depresso-bot
+# mag1c1an
 personal discord bot in Js
 
 ## running the bot
